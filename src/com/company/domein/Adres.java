@@ -12,12 +12,38 @@ public class Adres {
     private String straat;
     private String woonplaats;
 
-    @OneToOne(mappedBy = "adres")
+    @OneToOne
+    @JoinColumn(name = "reiziger_id")
     private Reiziger reiziger;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public String getHuisnummer() {
+        return huisnummer;
+    }
+
+    public String getStraat() {
+        return straat;
+    }
+
+    public String getWoonplaats() {
+        return woonplaats;
+    }
+
+    public Reiziger getReiziger() {
+        return reiziger;
+    }
 
     @Override
     public String toString() {
-        return String.format("Adres {#%d %s-%s, Reiziger {#%d %s. %s %s, geb. %s}}",
+        if(reiziger != null)
+            return String.format("Adres {#%d %s-%s, Reiziger {#%d %s. %s %s, geb. %s}}",
                 id,
                 postcode,
                 huisnummer,
@@ -26,5 +52,10 @@ public class Adres {
                 reiziger.getTussenvoegsel() == null ? "" : reiziger.getTussenvoegsel(),
                 reiziger.getAchternaam(),
                 reiziger.getGeboorteDatum());
+
+        return String.format("Adres {#%d %s-%s}",
+                id,
+                postcode,
+                huisnummer);
     }
 }
