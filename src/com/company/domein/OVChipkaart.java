@@ -18,13 +18,24 @@ public class OVChipkaart {
     @ManyToOne
     @JoinColumn(name = "reiziger_id")
     private Reiziger reiziger;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "ov_chipkaart_product",
             joinColumns = { @JoinColumn(name = "kaart_nummer")},
             inverseJoinColumns = { @JoinColumn(name = "product_nummer")}
     )
     private List<Product> producten;
+
+    public OVChipkaart() {}
+
+    public OVChipkaart(int kaartnummer, Date geldigTot, int klasse, double saldo, Reiziger reiziger) {
+        this.kaartnummer = kaartnummer;
+        this.geldigTot = geldigTot;
+        this.klasse = klasse;
+        this.saldo = saldo;
+        this.reiziger = reiziger;
+        producten = new ArrayList<>();
+    }
 
     public int getKaartnummer() {
         return kaartnummer;
@@ -42,12 +53,20 @@ public class OVChipkaart {
         return saldo;
     }
 
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
     public Reiziger getReiziger() {
         return reiziger;
     }
 
     public List<Product> getProducten() {
         return producten;
+    }
+
+    public void addProduct(Product product) {
+        this.producten.add(product);
     }
 
     @Override

@@ -16,6 +16,17 @@ public class Adres {
     @JoinColumn(name = "reiziger_id")
     private Reiziger reiziger;
 
+    public Adres() {}
+
+    public Adres(int id, String postcode, String huisnummer, String straat, String woonplaats, Reiziger reiziger) {
+        this.id = id;
+        this.postcode = postcode;
+        this.huisnummer = huisnummer;
+        this.straat = straat;
+        this.woonplaats = woonplaats;
+        this.reiziger = reiziger;
+    }
+
     public int getId() {
         return id;
     }
@@ -38,6 +49,10 @@ public class Adres {
 
     public Reiziger getReiziger() {
         return reiziger;
+    }
+
+    public void setHuisnummer(String huisnummer) {
+        this.huisnummer = huisnummer;
     }
 
     @Override

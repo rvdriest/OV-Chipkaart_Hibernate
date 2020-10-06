@@ -12,8 +12,18 @@ public class Product {
     private String naam;
     private String beschrijving;
     private double prijs;
-    @ManyToMany(mappedBy = "producten")
+    @ManyToMany(mappedBy = "producten", fetch = FetchType.EAGER)
     private List<OVChipkaart> ovChipkaarten;
+
+    public Product () {}
+
+    public Product(int nummer, String naam, String beschrijving, double prijs) {
+        this.nummer = nummer;
+        this.naam = naam;
+        this.beschrijving = beschrijving;
+        this.prijs = prijs;
+        this.ovChipkaarten = new ArrayList<>();
+    }
 
     public int getNummer() {
         return nummer;
@@ -31,8 +41,16 @@ public class Product {
         return prijs;
     }
 
+    public void setPrijs(double prijs) {
+        this.prijs = prijs;
+    }
+
     public List<OVChipkaart> getOvChipkaarten() {
         return ovChipkaarten;
+    }
+
+    public void addOvChipkaart(OVChipkaart ovChipkaart) {
+        this.ovChipkaarten.add(ovChipkaart);
     }
 
     @Override

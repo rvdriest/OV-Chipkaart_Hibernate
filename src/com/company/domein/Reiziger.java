@@ -1,5 +1,10 @@
 package com.company.domein;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,10 +21,24 @@ public class Reiziger {
     private Date geboorteDatum;
 
     @OneToMany(mappedBy = "reiziger")
+    @Fetch(FetchMode.SELECT) // TODO Uitzoeken wat dit doet
+    @LazyCollection(LazyCollectionOption.FALSE) // TODO Uitzoeken wat dit doet
     private List<OVChipkaart> ovChipkaarten;
 
     @OneToOne(mappedBy = "reiziger")
     private Adres adres;
+
+    public Reiziger() {}
+
+    public Reiziger(int id, String voorletters, String tussenvoegsel, String achternaam, Date geboorteDatum, Adres adres) {
+        this.id = id;
+        this.voorletters = voorletters;
+        this.tussenvoegsel = tussenvoegsel;
+        this.achternaam = achternaam;
+        this.geboorteDatum = geboorteDatum;
+        this.adres = adres;
+        this.ovChipkaarten = new ArrayList<>();
+    }
 
     /* Getters */
     public int getId() {
@@ -36,6 +55,12 @@ public class Reiziger {
     }
     public String getVoorletters() {
         return voorletters;
+    }
+
+    /* Setters */
+
+    public void setVoorletters(String voorletters) {
+        this.voorletters = voorletters;
     }
 
     @Override
