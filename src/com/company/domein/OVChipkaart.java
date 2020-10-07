@@ -15,7 +15,7 @@ public class OVChipkaart {
     private Date geldigTot;
     private int klasse;
     private double saldo;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "reiziger_id")
     private Reiziger reiziger;
     @ManyToMany(fetch = FetchType.EAGER)

@@ -12,7 +12,7 @@ public class Product {
     private String naam;
     private String beschrijving;
     private double prijs;
-    @ManyToMany(mappedBy = "producten", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "producten", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<OVChipkaart> ovChipkaarten;
 
     public Product () {}
@@ -28,15 +28,12 @@ public class Product {
     public int getNummer() {
         return nummer;
     }
-
     public String getNaam() {
         return naam;
     }
-
     public String getBeschrijving() {
         return beschrijving;
     }
-
     public double getPrijs() {
         return prijs;
     }

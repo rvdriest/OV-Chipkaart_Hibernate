@@ -74,15 +74,23 @@ public class Main {
     }
 
     private static void testDAOHibernate() {
-        testReizigerDAO();
-        testAdresDAO();
-        testOVChipkaartDAO();
-        testProductDAO();
+        Session session = getSession();
+        testReizigerDAO(session);
+        testAdresDAO(session);
+        testOVChipkaartDAO(session);
+        testProductDAO(session);
+        reset(session);
+        session.close();
     }
 
-    private static void testReizigerDAO() {
-        ReizigerDAO reizigerDAO = new ReizigerDAOPsql(factory);
-        AdresDAO adresDAO = new AdresDAOPsql(factory);
+    private static void reset(Session session) {
+        ReizigerDAO reizigerDAO = new ReizigerDAOPsql(session);
+        reizigerDAO.delete(reizigerDAO.findById(7));
+    }
+
+    private static void testReizigerDAO(Session session) {
+        ReizigerDAO reizigerDAO = new ReizigerDAOPsql(session);
+        AdresDAO adresDAO = new AdresDAOPsql(session);
 
         System.out.println("[Test] findAll()");
         for(Reiziger reiziger : reizigerDAO.findAll()) {
@@ -112,9 +120,9 @@ public class Main {
         reizigerDAO.delete(reizigerDAO.findById(7));
         reizigerDAO.findAll().forEach(reiziger1 -> System.out.println(reiziger1));
     }
-    private static void testAdresDAO() {
-        AdresDAO adresDAO = new AdresDAOPsql(factory);
-        ReizigerDAO reizigerDAO = new ReizigerDAOPsql(factory);
+    private static void testAdresDAO(Session session) {
+        AdresDAO adresDAO = new AdresDAOPsql(session);
+        ReizigerDAO reizigerDAO = new ReizigerDAOPsql(session);
 
         System.out.println("[Test] findAll()");
         for(Adres adres : adresDAO.findAll()) {
@@ -142,9 +150,9 @@ public class Main {
         adresDAO.delete(adres);
         System.out.println(adresDAO.findByReiziger(r));
     }
-    private static void testOVChipkaartDAO() {
-        OVChipkaartDAO ovChipkaartDAO = new OVChipkaartDAOPsql(factory);
-        ReizigerDAO reizigerDAO = new ReizigerDAOPsql(factory);
+    private static void testOVChipkaartDAO(Session session) {
+        OVChipkaartDAO ovChipkaartDAO = new OVChipkaartDAOPsql(session);
+        ReizigerDAO reizigerDAO = new ReizigerDAOPsql(session);
 
         System.out.println("[Test] findAll()");
         ovChipkaartDAO.findAll().forEach(ov -> System.out.println(ov));
@@ -165,10 +173,11 @@ public class Main {
         System.out.println("\n[Test] delete()");
         ovChipkaartDAO.delete(ovChipkaart);
         System.out.println(ovChipkaartDAO.findByReiziger(reizigerDAO.findById(7)));
+        System.out.println(reizigerDAO.findById(7));
     }
-    private static void testProductDAO() {
-        ProductDAO productDAO = new ProductDAOPsql(factory);
-        OVChipkaartDAO ovChipkaartDAO = new OVChipkaartDAOPsql(factory);
+    private static void testProductDAO(Session session) {
+        ProductDAO productDAO = new ProductDAOPsql(session);
+        OVChipkaartDAO ovChipkaartDAO = new OVChipkaartDAOPsql(session);
 
         System.out.println("[Test] findAll()");
         productDAO.findAll().forEach(p -> System.out.println(p));

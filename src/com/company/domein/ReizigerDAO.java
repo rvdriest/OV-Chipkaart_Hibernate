@@ -3,9 +3,9 @@ package com.company.domein;
 import java.util.List;
 
 public interface ReizigerDAO {
-    void save(Reiziger reiziger);
-    void update(Reiziger reiziger);
-    void delete(Reiziger reiziger);
+    boolean save(Reiziger reiziger);
+    boolean update(Reiziger reiziger);
+    boolean delete(Reiziger reiziger);
 
     Reiziger findById(int id);
     List<Reiziger> findByGbDatum(String datum);

@@ -20,12 +20,12 @@ public class Reiziger {
     private String achternaam;
     private Date geboorteDatum;
 
-    @OneToMany(mappedBy = "reiziger")
-    @Fetch(FetchMode.SELECT) // TODO Uitzoeken wat dit doet
-    @LazyCollection(LazyCollectionOption.FALSE) // TODO Uitzoeken wat dit doet
+    @OneToMany(mappedBy = "reiziger", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<OVChipkaart> ovChipkaarten;
 
-    @OneToOne(mappedBy = "reiziger")
+    @OneToOne(mappedBy = "reiziger", cascade = CascadeType.PERSIST)
     private Adres adres;
 
     public Reiziger() {}
@@ -58,7 +58,6 @@ public class Reiziger {
     }
 
     /* Setters */
-
     public void setVoorletters(String voorletters) {
         this.voorletters = voorletters;
     }
